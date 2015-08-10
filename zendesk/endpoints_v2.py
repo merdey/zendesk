@@ -368,6 +368,14 @@ mapping_table = {
         'path': '/tags.json',
         'method': 'GET',
     },
+    'add_tags': {
+        'path': '/users/{{user_id}}/tags.json',
+        'method': 'PUT',
+    },
+    'remove_tags': {
+        'path': '/users/{{user_id}}/tags.json',
+        'method': 'DELETE',
+    },
 
     # Forums
     'list_forums': {
