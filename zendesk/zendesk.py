@@ -157,6 +157,14 @@ class Zendesk(object):
         """
         def call(self, **kwargs):
             """ """
+            if api_call == 'next':
+                response, content = self.client.request(
+                    kwargs.pop('next_page'),
+                    'GET',
+                    headers=self.headers,
+                )
+                return self._response_handler(response, content, 200)
+
             api_map = self.mapping_table[api_call]
             path = api_map['path']
             if self.api_version == 2:
@@ -208,7 +216,7 @@ class Zendesk(object):
             return self._response_handler(response, content, status)
 
         # Missing method is also not defined in our mapping table
-        if api_call not in self.mapping_table:
+        if api_call not in self.mapping_table and api_call != 'next':
             raise AttributeError('Method "%s" Does Not Exist' % api_call)
 
         # Execute dynamic method and pass in keyword args as data to API call
